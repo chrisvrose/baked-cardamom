@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     {
         // just get the camera and store it - we will need it
         playerCamera = transform.Find("Main Camera");
+
+        // lock the cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -34,13 +37,21 @@ public class Player : MonoBehaviour
         // we will need the time elapsed a few times so better cache this
         float dt = Time.deltaTime;
 
+        // release the cursor if pressed escape
+        if(Input.GetKeyDown("escape")){
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         // set the camera stuff
         doCameraRotate(dt);
         // get the movement vector that was entered
         doPlayerMove(dt);
     }
 
-
+    /// <summary>
+    /// Move the player's cam
+    /// </summary>
+    /// <param name="dt">Delta time since last frame update</param>
     private void doCameraRotate(float dt)
     {
         var rotateX = Input.GetAxis("Mouse X") * mouseSensitivity;
